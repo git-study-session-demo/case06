@@ -52,7 +52,7 @@ git log
 # 2. 正しいブランチに切り替えて、コミットを付け替える
 
 ```
-git switch -c feature/01
+git switch feature/01
 git cherry-pick <commit id>
 ```
 ### 正しいブランチに正しいコミットがあることを確認

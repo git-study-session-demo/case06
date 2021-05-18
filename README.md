@@ -1,6 +1,7 @@
 # 特定のコミットだけを他のブランチにつけかえる
 
-> 間違ったブランチにコミットしてしまったので正しいブランチにつけかえたい、特定のコミットだけmainブランチにマージしたいなんてことはありませんでしょうか？
+> 間違ったブランチにコミットしてしまったので正しいブランチにつけかえたい、特定のコミットだけmainブランチにマージしたいなんてことはありませんでしょうか？  
+今回は複数のタスクを割り込みでやるとき、間違ったブランチにコミットしてしまった時のシナリオをハンズオンでやります。
 
 # 0. リポジトリを作成しよう
 
@@ -14,36 +15,31 @@
 git clone <リポジトリURL>
 ```
 
-# 1. 複数回コミットをする
+# 1. タスク1のブランチをきり、途中までコミットをする
 ```
 git switch -c feature/01
+echo "hello, world: 1行目" >> sample.txt
+git add sample.txt
+git commit -m 'commit task.1 途中'
 ```
+# 2. タスク2の割り込み発生で、mainからタスク2のブランチを切り替え、コミット・プッシュをする
 ```
-echo "hello, world" > sample1.txt
+git switch main
+git switch -c feature/02
+echo "hello, world" > task2.txt
+git add task2.txt
+git commit -m 'commit task.2'
 ```
+# 3. タスク1の作業に戻って作業を再開するが、ブランチを切り替え忘れている
 ```
-git add .
+echo "hello, world: 2行目" >> sample.txt
+git add sample.txt
+git commit -m 'commit task.1 完了'
 ```
+### sample.txtを確認すると、ブランチを間違っていることを気づく
 ```
-git commit -m 'commit No.1'
-```
-```
-echo "hello, world" > sample2.txt
-```
-```
-git add .
-```
-```
-git commit -m 'commit No.2'
-```
-```
-echo "hello, world" > sample3.txt
-```
-```
-git add .
-```
-```
-git commit -m 'commit No.3'
+➜  case06 git:(main) ✗ cat sample.txt 
+hello, world: 2行目
 ```
 
 ### コミットIDをメモする
@@ -53,20 +49,14 @@ git log
 <img width="1435" alt="スクリーンショット 2021-05-15 3 22 57" src="https://user-images.githubusercontent.com/71377103/118313042-36a6f800-b52d-11eb-89c9-b5bebbcfb6c8.png">
 
 
-# 2. 別のブランチに"commit No.2"をマージする。
+# 2. 正しいブランチに切り替えて、コミットを付け替える
 
 ```
-git switch main
-```
-```
-git switch -c feature/02
-```
-```
+git switch -c feature/01
 git cherry-pick <commit id>
 ```
-### "commit No.2"のコミットがあることを確認
+### 正しいブランチに正しいコミットがあることを確認
 ```
 git log
 ```
 <img width="1435" alt="スクリーンショット 2021-05-15 3 24 12" src="https://user-images.githubusercontent.com/71377103/118313066-3d356f80-b52d-11eb-8690-b44dec45fffd.png">
-

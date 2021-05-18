@@ -38,7 +38,8 @@ git commit -m 'commit task.1 完了'
 ```
 ### lsでファイル一覧を確認すると、ブランチを間違っていることを気づく
 ```
-➜  case06 git:(main) ✗ ls 
+➜  case06 git:(feature/02) ls
+README.md    task1_02.txt task2.txt
 ```
 
 ### コミットIDをメモする
@@ -58,3 +59,4 @@ git cherry-pick <commit id>
 ```
 git log
 ```
+<img width="1068" alt="スクリーンショット 2021-05-18 14 34 50" src="https://user-images.githubusercontent.com/869103/118595935-4bfa7b80-b7e6-11eb-8ee8-24c3de5fbcaf.png">
